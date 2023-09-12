@@ -1,0 +1,7 @@
+com/upcompdistr/calculadora/Models/Streams.class
+com/upcompdistr/calculadora/Models/MsgStruct.class
+com/upcompdistr/calculadora/Models/Message.class
+com/upcompdistr/calculadora/ServerHandler.class
+com/upcompdistr/calculadora/Models/OperationResult.class
+com/upcompdistr/calculadora/MOMCalculadora.class
+com/upcompdistr/calculadora/ClientHandler.class

@@ -1,0 +1,10 @@
+com/upcompdistr/calculadora/Models/MsgStruct.class
+com/upcompdistr/calculadora/Models/Streams.class
+com/upcompdistr/calculadora/AdditionServer.class
+com/upcompdistr/calculadora/ConnectionHandlerThread.class
+com/upcompdistr/calculadora/MultiplicationServer.class
+com/upcompdistr/calculadora/DivisionServer.class
+com/upcompdistr/calculadora/Models/Message.class
+com/upcompdistr/calculadora/Models/OperationResult.class
+com/upcompdistr/calculadora/SubstractionServer.class
+com/upcompdistr/calculadora/ServerCalculadora.class
