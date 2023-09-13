@@ -61,8 +61,10 @@ public class ConnectionThread extends Thread {
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
         }
     }

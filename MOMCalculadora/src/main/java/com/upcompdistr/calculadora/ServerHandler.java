@@ -51,7 +51,7 @@ public class ServerHandler extends Thread {
                 if (!socket.isClosed() && socket != null) {
                     socket.close();
                     MOMCalculadora.connectedClients.remove(id);
-                    System.out.println("Client disconnected: " + id);
+                    System.out.println("Server disconnected: " + id);
                 }
             } catch (IOException e) {
                 System.out.println("Problem closing socket with id " + id);

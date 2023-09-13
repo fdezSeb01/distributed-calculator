@@ -8,11 +8,12 @@ public class Message implements Serializable {
     private short size;
     private List<Short> ops;
 
-    public Message(short size, short op1, short op2) {
+    public Message(short size, String[] ops_arr) {
         this.size = size;
         this.ops = new ArrayList<>();
-        this.ops.add(op1);
-        this.ops.add(op2);
+        for(String op : ops_arr){
+            this.ops.add(Short.parseShort(op));
+        }
     }
 
     public short getSize() {
@@ -28,4 +29,6 @@ public class Message implements Serializable {
         return "Message [size=" + size + ", ops=" + ops + "]";
     } 
 }
+
+
 

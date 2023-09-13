@@ -2,6 +2,8 @@ package com.upcompdistr.calculadora;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.upcompdistr.calculadora.Models.Message;
 import com.upcompdistr.calculadora.Models.MsgStruct;
@@ -15,15 +17,17 @@ import javafx.scene.control.TextField;
 public class PrimaryController {
     private static final short NONE = 32767;
     private static ObjectOutputStream out;
-    private static short op,op1,op2;
+    private static short op=NONE;
     private static PrimaryController instance;
+    private static String ops_commas="";
+    private static String tempNum="";
 
     @FXML
     private void initialize(){
         instance=this;
     }
 
-    static {op = op1 = op2 = NONE;}
+    static {op =NONE;}
 
     @FXML
     private TextField resultado;
@@ -80,35 +84,31 @@ public class PrimaryController {
     private Button btnDivide;
 
     private void setOperand(short n){
-        if(op1 == NONE){
-
-            op1 = n;
-            resultado.setText(""+n);
-            return;
+        if(op==NONE){
+            resultado.setText("");
         }
-        if(op ==NONE){
-            System.out.println("Operand Missing");
-            return;
-        }
-        if (op2== NONE){
-            op2=n;
-            resultado.setText(resultado.getText()+n);
-            return;
-        }
-        System.out.println("Only two operands per operation");
+        tempNum+=n;
+        resultado.setText(resultado.getText()+n);
     }
 
     private void setOp(short n, String symbol){
-        if(op1==NONE){
-            System.out.println("First operand missing");
+        if(tempNum.isEmpty()){
+            System.out.println("Operand missing");
             return;
         }
-        if(op == NONE){
-            op=n;
-            resultado.setText(resultado.getText()+symbol);
+        if(op==NONE){
+            op = n;
+        } else if (n != op){
+            System.out.println("Only one operand allowed");
             return;
         }
-        System.out.println("Only one operation allowed");
+        if(resultado.getText().isEmpty()){
+            System.out.println("Operand missing");
+            return;
+        }
+        ops_commas+=tempNum+",";
+        tempNum="";
+        resultado.setText(resultado.getText()+symbol);
     }
 
     @FXML
@@ -164,21 +164,26 @@ public class PrimaryController {
     @FXML
     private void handleBtnDotClick() {
         //resultado.setText(resultado.getText()+".");
-        op = op1 = op2 = NONE;
-
+        resultado.setText("");
+        tempNum="";
+        op=NONE;
+        ops_commas="";
     }
     
     @FXML
     private void handleBtnEqualsClick() throws IOException {
         //send operation to MOM (later)
-        if(op == NONE || op1==NONE || op2==NONE){
+        if(resultado.getText().isEmpty()){
             System.out.println("Missing operands or operation");
             return;
         }
-        MsgStruct msg = new MsgStruct(op,new Message((short)2, op1, op2));
+        ops_commas+=tempNum;
+        MsgStruct msg = new MsgStruct(op,new Message((short)2, ops_commas.split(",")));
         sendMessage2Server(msg);
         resultado.setText("");
-        op = op1 = op2 = NONE;
+        op=NONE;
+        tempNum="";
+        ops_commas="";
     }
 
     private void sendMessage2Server(MsgStruct msg) throws IOException {

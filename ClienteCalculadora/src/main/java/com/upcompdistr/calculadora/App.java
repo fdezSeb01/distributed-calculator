@@ -17,7 +17,7 @@ public class App extends Application {
         ConnectionThread socketThread = new ConnectionThread();
         socketThread.setDaemon(true); 
         socketThread.start();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
         stage.show();
     }
