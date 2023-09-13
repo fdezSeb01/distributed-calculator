@@ -8,8 +8,8 @@ public class Message implements Serializable {
     private short size;
     private List<Short> ops;
 
-    public Message(short size, String[] ops_arr) {
-        this.size = size;
+    public Message(String[] ops_arr) {
+        this.size = (short)ops_arr.length;
         this.ops = new ArrayList<>();
         for(String op : ops_arr){
             this.ops.add(Short.parseShort(op));

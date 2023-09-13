@@ -178,7 +178,7 @@ public class PrimaryController {
             return;
         }
         ops_commas+=tempNum;
-        MsgStruct msg = new MsgStruct(op,new Message((short)2, ops_commas.split(",")));
+        MsgStruct msg = new MsgStruct(op,new Message(ops_commas.split(",")));
         sendMessage2Server(msg);
         resultado.setText("");
         op=NONE;
