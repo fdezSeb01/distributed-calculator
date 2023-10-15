@@ -14,9 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        ConnectionThread socketThread = new ConnectionThread();
-        socketThread.setDaemon(true); 
-        socketThread.start();
+        create_connection_thread();
         scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
         stage.show();
@@ -33,6 +31,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void create_connection_thread(){
+        ConnectionThread socketThread = new ConnectionThread();
+        socketThread.setDaemon(true); 
+        socketThread.start();
     }
 
 }

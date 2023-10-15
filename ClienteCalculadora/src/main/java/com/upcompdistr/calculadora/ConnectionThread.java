@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.upcompdistr.calculadora.Models.OperationResult;
 
@@ -24,24 +25,32 @@ public class ConnectionThread extends Thread {
     public void run() {
         final String SERVER_ADDRESS = "localhost";
         int[] ports = get_port_list();
+        boolean connection_succesful = true;
+        Random rnd = new Random();
+        int i=rnd.nextInt(ports.length); // se conecta a uno de los puertos disponibles
+        do{
+            i = (i%ports.length); //mantiene el inice valido
+            int port = ports[i]; //elige el puerto del indice elegido
+            try {
+                socket = new Socket(SERVER_ADDRESS, port);
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(socket.getInputStream());
+                out.writeObject("CLIENT");
+                PrimaryController.setOut(out); //pass out to controllers that need it
 
-        try {
-            socket = new Socket(SERVER_ADDRESS, ports[0]);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-            out.writeObject("CLIENT");
-            PrimaryController.setOut(out); //pass out to controllers that need it
-
-            Thread listenerThread = new Thread(() -> {
-                listener();
-            });
-            listenerThread.setDaemon(true);
-            listenerThread.start();
-            System.out.println("Connected client to MOM on port: " + ports[0]);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            System.out.println("Couldn't connect to MOM on port: " + ports[0]);
-        }
+                Thread listenerThread = new Thread(() -> {
+                    listener();
+                });
+                listenerThread.setDaemon(true);
+                listenerThread.start();
+                System.out.println("Connected client to MOM on port: " + port);
+            } catch (IOException e) {
+                //e.printStackTrace();
+                connection_succesful = false;
+                i++; //si hay error al conectar se pasa a conectar al siguiente puerto disponible
+                System.out.println("Couldn't connect to MOM on port: " + port);
+            }
+        }while(!connection_succesful);
     }
 
     public void disconnect() {

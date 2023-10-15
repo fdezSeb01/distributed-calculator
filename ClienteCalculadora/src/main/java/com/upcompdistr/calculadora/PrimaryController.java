@@ -192,6 +192,7 @@ public class PrimaryController {
             //out.flush();
         } catch (IOException e) {
             System.out.println("Can't send message to server.");
+            App.create_connection_thread(); //create another connection
         }
     }
 

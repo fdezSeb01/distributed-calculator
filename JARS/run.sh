@@ -8,6 +8,8 @@ fi
 num_mom_runs=$1
 num_client_runs=$2
 
+echo -n > ports.config
+
 for ((i=1; i<=num_mom_runs; i++)); do
   echo "Running mom.jar #$i"
   gnome-terminal -- java -jar mom.jar
