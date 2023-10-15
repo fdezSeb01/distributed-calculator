@@ -32,8 +32,10 @@ public class ClientHandler extends Thread {
                     //System.out.println("Received from client " + id + " a message: " + msg.toString());
                     final MsgStruct output = msg;
                     System.out.println("Received from client " + id + " a message: " + msg.toString());
-                    ObjectOutputStream outExt = MOMCalculadora.availableServers.get((short)output.getType()).getOut();
-                    sendMessage2Server(output,outExt);
+                    for (Streams str : MOMCalculadora.availableServers.values()){
+                        ObjectOutputStream outExt = str.getOut();
+                        sendMessage2Server(output,outExt);
+                    }   
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
                     e.printStackTrace();

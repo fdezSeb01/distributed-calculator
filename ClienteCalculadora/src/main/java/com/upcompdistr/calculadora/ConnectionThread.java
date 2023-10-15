@@ -1,9 +1,13 @@
 package com.upcompdistr.calculadora;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.upcompdistr.calculadora.Models.OperationResult;
 
@@ -19,10 +23,10 @@ public class ConnectionThread extends Thread {
     @Override
     public void run() {
         final String SERVER_ADDRESS = "localhost";
-        final int SERVER_PORT = 1234;
+        int[] ports = get_port_list();
 
         try {
-            socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+            socket = new Socket(SERVER_ADDRESS, ports[0]);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             out.writeObject("CLIENT");
@@ -33,10 +37,10 @@ public class ConnectionThread extends Thread {
             });
             listenerThread.setDaemon(true);
             listenerThread.start();
-            System.out.println("Connected client to MOM on port: " + SERVER_PORT);
+            System.out.println("Connected client to MOM on port: " + ports[0]);
         } catch (IOException e) {
             //e.printStackTrace();
-            System.out.println("Couldn't connect to MOM on port: " + SERVER_PORT);
+            System.out.println("Couldn't connect to MOM on port: " + ports[0]);
         }
     }
 
@@ -67,6 +71,32 @@ public class ConnectionThread extends Thread {
                 return;
             }
         }
+    }
+
+    private int[] get_port_list(){
+        List<Integer> portList = new ArrayList<>();
+        String filename = "/media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/JARS/ports.config"; // Replace with the actual file path
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    int port = Integer.parseInt(line);
+                    portList.add(port);
+                } catch (NumberFormatException e) {
+                    // Handle invalid lines (not integers) if necessary
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Convert the List<Integer> to an int[]
+        int[] ports = new int[portList.size()];
+        for (int i = 0; i < portList.size(); i++) {
+            ports[i] = portList.get(i);
+        }
+
+        return ports;
     }
 }
 

@@ -29,7 +29,7 @@ public class AdditionServer {
         }
         sum = sum.substring(0, sum.length()-1);
         if(out != null){
-            OperationResult opRes = new OperationResult(sum+"=", res);
+            OperationResult opRes = new OperationResult(true,sum+"=", res);
             out.writeObject(opRes);
         }
     }

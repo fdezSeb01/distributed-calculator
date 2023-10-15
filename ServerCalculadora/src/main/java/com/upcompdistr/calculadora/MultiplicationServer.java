@@ -29,7 +29,7 @@ public class MultiplicationServer {
         }
         mult = mult.substring(0, mult.length()-1);
         if(out != null){
-            OperationResult opRes = new OperationResult(mult+"=", res);
+            OperationResult opRes = new OperationResult(true,mult+"=", res);
             out.writeObject(opRes);
         }
     }

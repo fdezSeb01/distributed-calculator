@@ -29,16 +29,19 @@ public class ServerHandler extends Thread {
             while (true) {
                 try {
                     opRes = (OperationResult) in.readObject();
-                    //System.out.println("Received from client " + id + " a message: " + msg.toString());
                     final OperationResult output = opRes;
                     System.out.println("Received from server " + id + " a message: " + opRes.toString());
-                    MOMCalculadora.connectedClients.forEach((key, outExt) -> {
-                        try {
-                            sendMessage2Server(output, outExt.getOut());
-                        } catch (IOException e) {
-                            System.out.println("Error sending message to server " + id);
-                        }
-                    });
+                    if (!opRes.isSolved()){
+                        System.out.println(opRes.getLog());
+                    } else{
+                        MOMCalculadora.connectedClients.forEach((key, outExt) -> {
+                                try {
+                                    sendMessage2Server(output, outExt.getOut());
+                                } catch (IOException e) {
+                                    System.out.println("Error sending message to server " + id);
+                                }
+                        });
+                    }
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
                     e.printStackTrace();

@@ -30,7 +30,7 @@ public class DivisionServer {
         }
         txt = txt.substring(0, txt.length()-1);
         if(out != null){
-            OperationResult opRes = new OperationResult(txt+"=", res);
+            OperationResult opRes = new OperationResult(true,txt+"=", res);
             out.writeObject(opRes);
         }
     }
