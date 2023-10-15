@@ -28,6 +28,7 @@ public class ConnectionThread extends Thread {
         boolean connection_succesful = true;
         Random rnd = new Random();
         int i=rnd.nextInt(ports.length); // se conecta a uno de los puertos disponibles
+        int cont_fail_conns=0;
         do{
             i = (i%ports.length); //mantiene el inice valido
             int port = ports[i]; //elige el puerto del indice elegido
@@ -44,10 +45,17 @@ public class ConnectionThread extends Thread {
                 listenerThread.setDaemon(true);
                 listenerThread.start();
                 System.out.println("Connected client to MOM on port: " + port);
+                cont_fail_conns = 0;
+                connection_succesful=true;
             } catch (IOException e) {
                 //e.printStackTrace();
                 connection_succesful = false;
                 i++; //si hay error al conectar se pasa a conectar al siguiente puerto disponible
+                cont_fail_conns++;
+                if(cont_fail_conns > ports.length){
+                    System.out.println("No hay middlewares disponibles");
+                    break;
+                }
                 System.out.println("Couldn't connect to MOM on port: " + port);
             }
         }while(!connection_succesful);
@@ -76,7 +84,9 @@ public class ConnectionThread extends Thread {
                 e.printStackTrace();
                 return;
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.out.println("MOM lost");
+                App.create_connection_thread();
                 return;
             }
         }
@@ -97,6 +107,10 @@ public class ConnectionThread extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (portList.isEmpty()){
+            System.out.println("There is not any server to connect to");
+            return new int[0];
         }
 
         // Convert the List<Integer> to an int[]

@@ -23,6 +23,7 @@ public class MOMCalculadora {
     public static Map<String, Streams> availableServers = new HashMap<>();
     public static int[] available_ports;
     public static Map<String, Streams> connected_moms = new HashMap<>();
+    public static List<Integer> used_ports = new ArrayList<>();
     public static int port;
     public static void main(String[] args){
         ServerSocket serverSocket = null; // Initialize serverSocket outside the try-catch block.
@@ -31,8 +32,10 @@ public class MOMCalculadora {
             Random random = new Random();
             port = random.nextInt(9000) + 1000;
 
-            connect_to_available_ports();
             add_port_to_file(port);
+            used_ports.add(port);
+            connect_to_available_ports();
+            
 
             serverSocket = new ServerSocket(port);
             System.out.println("Server started on port " + port);
@@ -61,6 +64,7 @@ public class MOMCalculadora {
                         connected_moms.put(id, streams);
                         OtherMOMHandler handlerThread = new OtherMOMHandler(socket, id, streams);
                         handlerThread.start();
+                        connect_to_available_ports();
                     }else {
                         System.out.println("Unknown connection type");
                         socket.close();
@@ -124,10 +128,11 @@ public class MOMCalculadora {
         available_ports = new int[portList.size()];
         for (int i = 0; i < portList.size(); i++) {
             available_ports[i] = portList.get(i);
-            create_connection_thread(available_ports[i]);
+            if (!used_ports.contains(available_ports[i])){
+                create_connection_thread(available_ports[i]);
+            }
+            used_ports.add(available_ports[i]);
         }
-
-
     }
 
     private static void create_4_servers(){

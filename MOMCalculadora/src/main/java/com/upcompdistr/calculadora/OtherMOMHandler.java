@@ -23,38 +23,27 @@ public class OtherMOMHandler extends Thread {
     @Override
     public void run() {
         try{
-            System.out.println("Other MOM connected: " + id);
-            OperationResult opRes;
+            //System.out.println("Other MOM connected: " + id);
+            MOM_connection mc;
 
             while (true) {
                 try {
-                    opRes = (OperationResult) in.readObject();
-                    final OperationResult output = opRes;
-                    if (!opRes.isSolved()){
-                        System.out.println(opRes.getLog());
-                    } else{
-                        System.out.println("Received from another MOM " + id + " a message: " + opRes.toString());
-                        MOMCalculadora.connectedClients.forEach((key, outExt) -> {
-                                try {
-                                    sendMessage2Server(output, outExt.getOut());
-                                } catch (IOException e) {
-                                    System.out.println("Error sending message to another MOM " + id);
-                                }
-                        });
-                    }
+                    mc = (MOM_connection) in.readObject();
+                    final MOM_connection output = mc;
+                    System.out.println("Received from client " + id + " a message: " + mc.toString());  
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
                     e.printStackTrace();
                 }
             }
         } catch (IOException e) {
-            System.out.println("Problem handling another MOM " + id);
+            //System.out.println("Problem handling another MOM " + id);
         } finally {
             try {
                 if (!socket.isClosed() && socket != null) {
                     socket.close();
-                    MOMCalculadora.connectedClients.remove(id);
-                    System.out.println("another MOM disconnected: " + id);
+                    MOMCalculadora.connected_moms.remove(id);
+                    System.out.println("A MOM disconnected with id " + id);
                 }
             } catch (IOException e) {
                 System.out.println("Problem another MOM socket with id " + id);

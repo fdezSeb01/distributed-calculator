@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo -n > ports.config
 # Default values
 num_mom_runs=0
 num_client_runs=0
@@ -30,11 +30,12 @@ fi
 for ((i=1; i<=num_mom_runs; i++)); do
   echo "Running mom.jar #$i"
   gnome-terminal -- java -jar mom.jar
+  sleep 1
 done
 
 # Run "java -jar client.jar"
 for ((i=1; i<=num_client_runs; i++)); do
   echo "Running client.jar #$i"
-  gnome-terminal -- java -jar client.jar
+  gnome-terminal -- java -jar cliente.jar
 done
 

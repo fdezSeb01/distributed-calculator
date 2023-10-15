@@ -1,7 +1,10 @@
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/MOMCalculadora.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/Models/OperationResult.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/Models/Streams.java
+/media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/Models/MOM_connection.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/Models/Message.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/Models/MsgStruct.java
+/media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/ConnectionThread.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/ServerHandler.java
+/media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/OtherMOMHandler.java
 /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/MOMCalculadora/src/main/java/com/upcompdistr/calculadora/ClientHandler.java

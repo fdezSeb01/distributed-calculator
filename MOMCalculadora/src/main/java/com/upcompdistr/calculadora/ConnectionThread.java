@@ -68,7 +68,7 @@ public class ConnectionThread extends Thread {
                 e.printStackTrace();
                 return;
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 return;
             }
         }

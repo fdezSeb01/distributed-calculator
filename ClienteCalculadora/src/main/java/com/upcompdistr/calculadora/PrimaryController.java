@@ -84,7 +84,7 @@ public class PrimaryController {
     private Button btnDivide;
 
     private void setOperand(short n){
-        if(op==NONE){
+        if(op==NONE && tempNum.isEmpty()){
             resultado.setText("");
         }
         tempNum+=n;
@@ -191,8 +191,16 @@ public class PrimaryController {
             out.writeObject(msg);
             //out.flush();
         } catch (IOException e) {
-            System.out.println("Can't send message to server.");
+            System.out.println("Can't send message to MOM.");
             App.create_connection_thread(); //create another connection
+            try {
+                Thread.sleep(1000); // Sleep for one second (1000 milliseconds)
+                out.writeObject(msg);
+            } catch (InterruptedException err) {
+                System.err.println("Thread interrupted while sleeping");
+            } catch (IOException err) {
+                System.out.println("No se pudo enviar el mensaje tras resetear conexión");
+            }
         }
     }
 
@@ -229,6 +237,6 @@ public class PrimaryController {
 
     private void printResult(String log, double res){
         resultado.setText(String.valueOf(res));
-        logsTextArea.appendText(log+"\n");
+        logsTextArea.appendText(log+res+"\n");
     }
 }
