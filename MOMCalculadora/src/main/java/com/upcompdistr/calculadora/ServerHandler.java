@@ -30,10 +30,10 @@ public class ServerHandler extends Thread {
                 try {
                     opRes = (OperationResult) in.readObject();
                     final OperationResult output = opRes;
-                    System.out.println("Received from server " + id + " a message: " + opRes.toString());
                     if (!opRes.isSolved()){
                         System.out.println(opRes.getLog());
                     } else{
+                        System.out.println("Received from server " + id + " a message: " + opRes.toString());
                         MOMCalculadora.connectedClients.forEach((key, outExt) -> {
                                 try {
                                     sendMessage2Server(output, outExt.getOut());

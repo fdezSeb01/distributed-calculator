@@ -29,7 +29,6 @@ public class ClientHandler extends Thread {
             while (true) {
                 try {
                     msg = (MsgStruct) in.readObject();
-                    //System.out.println("Received from client " + id + " a message: " + msg.toString());
                     final MsgStruct output = msg;
                     System.out.println("Received from client " + id + " a message: " + msg.toString());
                     for (Streams str : MOMCalculadora.availableServers.values()){
