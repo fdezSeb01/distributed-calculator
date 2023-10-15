@@ -54,6 +54,7 @@ public class ConnectionThread extends Thread {
                 cont_fail_conns++;
                 if(cont_fail_conns > ports.length){
                     System.out.println("No hay middlewares disponibles");
+                    clean_ports_config();
                     break;
                 }
                 System.out.println("Couldn't connect to MOM on port: " + port);
@@ -120,6 +121,19 @@ public class ConnectionThread extends Thread {
         }
 
         return ports;
+    }
+
+    private void clean_ports_config(){
+        String command = "echo -n > /media/hdd/sebastianf/Documents/UP/Semestre7/ComputoDistribuido/Calculadora/JARS/ports.config";
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("bash", "-c", command);
+        try {
+            processBuilder.start();
+            //int exitCode = process.waitFor();
+            //System.out.println("Command exited with code: " + exitCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
