@@ -2,8 +2,6 @@ package com.upcompdistr.calculadora;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.upcompdistr.calculadora.Models.Message;
 import com.upcompdistr.calculadora.Models.MsgStruct;
