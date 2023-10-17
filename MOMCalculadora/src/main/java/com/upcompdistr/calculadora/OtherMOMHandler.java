@@ -23,7 +23,7 @@ public class OtherMOMHandler extends Thread {
     @Override
     public void run() {
         try{
-            //System.out.println("Other MOM connected: " + id);
+            System.out.println("Another MOM connected: " + id);
             MOM_connection mc;
 
             while (true) {
