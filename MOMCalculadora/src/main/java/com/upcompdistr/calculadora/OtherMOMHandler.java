@@ -24,13 +24,24 @@ public class OtherMOMHandler extends Thread {
     public void run() {
         try{
             System.out.println("Another MOM connected: " + id);
-            MOM_connection mc;
+            OperationResult opRes;
 
             while (true) {
                 try {
-                    mc = (MOM_connection) in.readObject();
-                    final MOM_connection output = mc;
-                    System.out.println("Received from client " + id + " a message: " + mc.toString());  
+                    opRes = (OperationResult) in.readObject();
+                    final OperationResult output = opRes;
+                    if (!opRes.isSolved()){
+                        System.out.println(opRes.getLog());
+                    } else{
+                        System.out.println("Received from server " + id + " a message: " + opRes.toString());
+                        MOMCalculadora.connectedClients.forEach((key, outExt) -> {
+                                try {
+                                    sendMessage2Server(output, outExt.getOut());
+                                } catch (IOException e) {
+                                    System.out.println("Error sending message to server " + id);
+                                }
+                        });
+                    }
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
                     e.printStackTrace();

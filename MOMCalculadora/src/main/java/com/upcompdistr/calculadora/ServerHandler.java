@@ -41,6 +41,13 @@ public class ServerHandler extends Thread {
                                     System.out.println("Error sending message to server " + id);
                                 }
                         });
+                        MOMCalculadora.connected_moms.forEach((key, outExt) -> { //mandar a otros MOM's
+                                try {
+                                    sendMessage2Server(output, outExt.getOut());
+                                } catch (IOException e) {
+                                    System.out.println("Error sending message to mom " + id);
+                                }
+                        });
                     }
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
