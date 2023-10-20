@@ -56,21 +56,39 @@ public class ConnectionThread extends Thread {
     }
 
     public void listener() {
-        MOM_connection mc;
+        OperationResult opRes;
         while (true) {
             try {
-                mc = (MOM_connection) in.readObject();
-                if(mc.isConnected())
-                    System.out.println("Connected to other MOM on port " +mc.getPort());
-                else
-                    System.out.println("Couldn't connect to other MOM on port " +mc.getPort());
+                opRes = (OperationResult) in.readObject();
+                final OperationResult output = opRes;
+                if (!opRes.isSolved()){
+                    System.out.println(opRes.getLog());
+                } else{
+                    System.out.println("Received from another MOM a message: " + opRes.toString());
+                    MOMCalculadora.connectedClients.forEach((key, outExt) -> {
+                            try {
+                                sendMessage2Server(output, outExt.getOut());
+                            } catch (IOException e) {
+                                System.out.println("Error sending message to another mom");
+                            }
+                    });
+                }
             } catch (ClassNotFoundException e) {
+                System.out.println("Can't deserialize input into MsgStruct");
                 e.printStackTrace();
-                return;
-            } catch (IOException e) {
-                //e.printStackTrace();
-                return;
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                //System.out.println("MOM disconnected");
+                break;
             }
+        }
+    }
+    private void sendMessage2Server(OperationResult opRes, ObjectOutputStream out) throws IOException {
+        try {
+            out.writeObject(opRes);
+            //out.flush();
+        } catch (IOException e) {
+            System.out.println("Can't send message to MOM.");
         }
     }
 }

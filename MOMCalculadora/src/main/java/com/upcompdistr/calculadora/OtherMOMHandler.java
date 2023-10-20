@@ -48,7 +48,7 @@ public class OtherMOMHandler extends Thread {
                 }
             }
         } catch (IOException e) {
-            //System.out.println("Problem handling another MOM " + id);
+            //e.printStackTrace();
         } finally {
             try {
                 if (!socket.isClosed() && socket != null) {
