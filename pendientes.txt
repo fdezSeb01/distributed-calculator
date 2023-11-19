@@ -1,0 +1,6 @@
+1. mensajes de solicitud de respuesta de operaciones en cola, una cola de suma, una de resta etc
+2. thread que tome los mensajes de las colas y los mande
+3. thread de recepción de threads, debe mandar acuse de recibido y almacenar en una cola los mensajes recibidos
+4. minimo de acuses de recibido configurable (1)
+5. conectar desde el puerto 6000 hasta que pueda
+6. thread que despache los mensajes de la cola de recibidos
