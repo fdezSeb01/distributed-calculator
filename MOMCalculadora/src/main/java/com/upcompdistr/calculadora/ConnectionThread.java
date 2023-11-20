@@ -1,16 +1,9 @@
 package com.upcompdistr.calculadora;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.upcompdistr.calculadora.Models.MOM_connection;
 import com.upcompdistr.calculadora.Models.OperationResult;
 
 public class ConnectionThread extends Thread {

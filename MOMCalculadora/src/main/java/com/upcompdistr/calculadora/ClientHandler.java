@@ -31,12 +31,12 @@ public class ClientHandler extends Thread {
                     msg = (MsgStruct) in.readObject();
                     final MsgStruct output = msg;
                     System.out.println("Received from client " + id + " a message: " + msg.toString());
-                    out.writeObject(new OperationResult()); //mandar acuse de recibido
-                    for (Streams str : MOMCalculadora.availableServers.values()){
-                        ObjectOutputStream outExt = str.getOut();
-                        //TODO: en lugar de mandar el output a los servers, agregar a la cola de mensajes recibidos (en thread separado)
-                        sendMessage2Server(output,outExt);
-                    }   
+                    MOMCalculadora.queueHandlerThread.addToQueue(output,out);
+                    //out.writeObject(new OperationResult()); //mandar acuse de recibido
+                    //for (Streams str : MOMCalculadora.availableServers.values()){
+                    //    ObjectOutputStream outExt = str.getOut();
+                    //    sendMessage2Server(output,outExt);
+                    //}   
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
                     e.printStackTrace();
@@ -56,13 +56,13 @@ public class ClientHandler extends Thread {
             }
         }
     }
-    private void sendMessage2Server(MsgStruct msg, ObjectOutputStream out) throws IOException {
-        try {
+    // private void sendMessage2Server(MsgStruct msg, ObjectOutputStream out) throws IOException {
+    //     try {
 
-            out.writeObject(msg);
-            //out.flush();
-        } catch (IOException e) {
-            System.out.println("Can't send message to server.");
-        }
-    }
+    //         out.writeObject(msg);
+    //         //out.flush();
+    //     } catch (IOException e) {
+    //         System.out.println("Can't send message to server.");
+    //     }
+    // }
 }

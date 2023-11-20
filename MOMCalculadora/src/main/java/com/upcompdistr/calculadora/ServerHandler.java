@@ -34,20 +34,21 @@ public class ServerHandler extends Thread {
                         System.out.println(opRes.getLog());
                     } else{
                         System.out.println("Received from server " + id + " a message: " + opRes.toString());
-                        MOMCalculadora.connectedClients.forEach((key, outExt) -> {
-                                try {
-                                    sendMessage2Server(output, outExt.getOut());
-                                } catch (IOException e) {
-                                    System.out.println("Error sending message to server " + id);
-                                }
-                        });
-                        MOMCalculadora.connected_moms.forEach((key, outExt) -> { //mandar a otros MOM's
-                                try {
-                                    sendMessage2Server(output, outExt.getOut());
-                                } catch (IOException e) {
-                                    System.out.println("Error sending message to mom " + id);
-                                }
-                        });
+                        MOMCalculadora.queueHandlerThread.addToQueue(output, out);
+                        // MOMCalculadora.connectedClients.forEach((key, outExt) -> {
+                        //         try {
+                        //             sendMessage2Server(output, outExt.getOut());
+                        //         } catch (IOException e) {
+                        //             System.out.println("Error sending message to server " + id);
+                        //         }
+                        // });
+                        // MOMCalculadora.connected_moms.forEach((key, outExt) -> { //mandar a otros MOM's
+                        //         try {
+                        //             sendMessage2Server(output, outExt.getOut());
+                        //         } catch (IOException e) {
+                        //             System.out.println("Error sending message to mom " + id);
+                        //         }
+                        // });
                     }
                 } catch (ClassNotFoundException e) {
                     System.out.println("Can't deserialize input into MsgStruct");
@@ -68,12 +69,12 @@ public class ServerHandler extends Thread {
             }
         }
     }
-    private void sendMessage2Server(OperationResult opRes, ObjectOutputStream out) throws IOException {
-        try {
-            out.writeObject(opRes);
-            //out.flush();
-        } catch (IOException e) {
-            System.out.println("Can't send message to MOM.");
-        }
-    }
+    // private void sendMessage2Server(OperationResult opRes, ObjectOutputStream out) throws IOException {
+    //     try {
+    //         out.writeObject(opRes);
+    //         //out.flush();
+    //     } catch (IOException e) {
+    //         System.out.println("Can't send message to MOM.");
+    //     }
+    // }
 }

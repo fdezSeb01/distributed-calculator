@@ -25,9 +25,11 @@ public class MOMCalculadora {
     public static Map<String, Streams> connected_moms = new HashMap<>();
     public static List<Integer> used_ports = new ArrayList<>();
     public static int port;
+
+    public static QueueHandlerThread queueHandlerThread;
+
     public static void main(String[] args){
         ServerSocket serverSocket = null; // Initialize serverSocket outside the try-catch block.
-        //TODO: se debe crear el thread para el queue handler donde se alamcene todo todos los mensjaes recibidos
         try {
             Random random = new Random();
             port = random.nextInt(9000) + 1000;
@@ -43,6 +45,10 @@ public class MOMCalculadora {
             //Create 4 operation servers for this MOM
             create_4_servers();
 
+            //queue thread
+            queueHandlerThread = new QueueHandlerThread();
+            queueHandlerThread.setDaemon(true);
+            queueHandlerThread.start();
             while (true) {
                 Socket socket = serverSocket.accept();
 
