@@ -20,9 +20,14 @@ public class PrimaryController {
     private static String ops_commas="";
     private static String tempNum="";
 
+    public static QueueHandlerThread queueHandlerThread;
+
     @FXML
     private void initialize(){
         instance=this;
+        queueHandlerThread = new QueueHandlerThread();
+        queueHandlerThread.setDaemon(true);
+        queueHandlerThread.start();
     }
 
     static {op =NONE;}
@@ -185,21 +190,9 @@ public class PrimaryController {
     }
 
     private void sendMessage2Server(MsgStruct msg) throws IOException {
-        try {
-            out.writeObject(msg);
+        queueHandlerThread.addMsgToQueue(msg);
+            //out.writeObject(msg);
             //out.flush();
-        } catch (IOException e) {
-            System.out.println("Can't send message to MOM.");
-            App.create_connection_thread(); //create another connection
-            try {
-                Thread.sleep(1000); // Sleep for one second (1000 milliseconds)
-                out.writeObject(msg);
-            } catch (InterruptedException err) {
-                System.err.println("Thread interrupted while sleeping");
-            } catch (IOException err) {
-                System.out.println("No se pudo enviar el mensaje tras resetear conexión");
-            }
-        }
     }
 
     
@@ -225,6 +218,7 @@ public class PrimaryController {
 
     public static void setOut(ObjectOutputStream o){
         out = o;
+        queueHandlerThread.setOut(o);
     }
 
     public static void GotResult(OperationResult opRes){

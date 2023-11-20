@@ -33,6 +33,7 @@ public class ClientHandler extends Thread {
                     System.out.println("Received from client " + id + " a message: " + msg.toString());
                     for (Streams str : MOMCalculadora.availableServers.values()){
                         ObjectOutputStream outExt = str.getOut();
+                        //TODO: en lugar de mandar el output a los servers, agregar a la cola de mensajes recibidos (en thread separado)
                         sendMessage2Server(output,outExt);
                     }   
                 } catch (ClassNotFoundException e) {

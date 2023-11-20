@@ -77,7 +77,6 @@ public class ConnectionThread extends Thread {
                 System.out.println("Can't deserialize input into MsgStruct");
                 e.printStackTrace();
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 //System.out.println("MOM disconnected");
                 break;
             }

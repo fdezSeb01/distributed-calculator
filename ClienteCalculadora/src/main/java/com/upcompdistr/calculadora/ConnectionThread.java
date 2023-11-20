@@ -77,6 +77,11 @@ public class ConnectionThread extends Thread {
         OperationResult opRes;
         while (true) {
             try {
+                //TODO: opcion de recibir acuses de recibido que interactuen con la variable de acuse de recibidos
+                if(out==null){ //cambiar a cuando recibe un acuse de recibido
+                    System.out.println(in.readObject().toString());
+                    PrimaryController.queueHandlerThread.increaseAcuses();
+                }
                 opRes = (OperationResult) in.readObject(); 
                 System.out.println(opRes.toString());
                 PrimaryController.GotResult(opRes);

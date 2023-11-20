@@ -27,7 +27,7 @@ public class MOMCalculadora {
     public static int port;
     public static void main(String[] args){
         ServerSocket serverSocket = null; // Initialize serverSocket outside the try-catch block.
-
+        //TODO: se debe crear el thread para el queue handler donde se alamcene todo todos los mensjaes recibidos
         try {
             Random random = new Random();
             port = random.nextInt(9000) + 1000;
