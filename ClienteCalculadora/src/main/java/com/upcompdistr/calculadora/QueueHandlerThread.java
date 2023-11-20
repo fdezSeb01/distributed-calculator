@@ -7,7 +7,7 @@ import java.util.Queue;
 
 import com.upcompdistr.calculadora.Models.MsgStruct;
 
-public class QueueHandlerThread extends Thread{
+public class QueueHandlerThread extends Thread {
     public final int min_acuses = 1;
     private int acuses = 1;
     ObjectOutputStream out;
@@ -119,18 +119,11 @@ public class QueueHandlerThread extends Thread{
         } else {
             System.out.println("Not enough acuses to send messages");
         }
-        if (!additionQueue.isEmpty() || !substractionQueue.isEmpty() || !multiplicationQueue.isEmpty() || !divisionQueue.isEmpty()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            checkAndSendPendingMessages();
-        }
     }
 
     public void increaseAcuses() {
         acuses++;
+        checkAndSendPendingMessages();
     }
 
 

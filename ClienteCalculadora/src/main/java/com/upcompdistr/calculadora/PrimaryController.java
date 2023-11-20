@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 
 public class PrimaryController {
     private static final short NONE = 32767;
-    private static ObjectOutputStream out;
     private static short op=NONE;
     private static PrimaryController instance;
     private static String ops_commas="";
@@ -217,7 +216,6 @@ public class PrimaryController {
     }
 
     public static void setOut(ObjectOutputStream o){
-        out = o;
         queueHandlerThread.setOut(o);
     }
 

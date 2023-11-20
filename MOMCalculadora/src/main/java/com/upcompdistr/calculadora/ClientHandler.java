@@ -31,6 +31,7 @@ public class ClientHandler extends Thread {
                     msg = (MsgStruct) in.readObject();
                     final MsgStruct output = msg;
                     System.out.println("Received from client " + id + " a message: " + msg.toString());
+                    out.writeObject(new OperationResult()); //mandar acuse de recibido
                     for (Streams str : MOMCalculadora.availableServers.values()){
                         ObjectOutputStream outExt = str.getOut();
                         //TODO: en lugar de mandar el output a los servers, agregar a la cola de mensajes recibidos (en thread separado)
