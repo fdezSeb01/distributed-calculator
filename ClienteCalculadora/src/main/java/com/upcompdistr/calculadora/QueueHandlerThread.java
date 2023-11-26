@@ -35,7 +35,7 @@ public class QueueHandlerThread extends Thread {
                 System.out.println("Invalid message type");
                 break;
         }
-        System.out.println("Message queued"+msg.toString());
+        System.out.println("Message queued: "+msg.toString());
         checkAndSendPendingMessages();
 
     }
@@ -47,7 +47,7 @@ public class QueueHandlerThread extends Thread {
         if (acuses >= min_acuses) {
             if (!additionQueue.isEmpty() && acuses >= min_acuses) {
                 MsgStruct msg_2_send = additionQueue.poll();
-                System.out.println("Message dequeued"+msg_2_send.toString());
+                System.out.println("Message dequeued: "+msg_2_send.toString());
                 try {
                     out.writeObject(msg_2_send);
                 } catch (IOException e) {
@@ -66,7 +66,7 @@ public class QueueHandlerThread extends Thread {
             }
             if (!substractionQueue.isEmpty() && acuses >= min_acuses) {
                 MsgStruct msg_2_send = substractionQueue.poll();
-                System.out.println("Message dequeued"+msg_2_send.toString());
+                System.out.println("Message dequeued: "+msg_2_send.toString());
                 try {
                     out.writeObject(msg_2_send);
                 } catch (IOException e) {
@@ -85,7 +85,7 @@ public class QueueHandlerThread extends Thread {
             }
             if (!multiplicationQueue.isEmpty() && acuses >= min_acuses) {
                 MsgStruct msg_2_send = multiplicationQueue.poll();
-                System.out.println("Message dequeued"+msg_2_send.toString());
+                System.out.println("Message dequeued: "+msg_2_send.toString());
                 try {
                     out.writeObject(msg_2_send);
                 } catch (IOException e) {
@@ -104,7 +104,7 @@ public class QueueHandlerThread extends Thread {
             }
             if (!divisionQueue.isEmpty() && acuses >= min_acuses) {
                 MsgStruct msg_2_send = divisionQueue.poll();
-                System.out.println("Message dequeued"+msg_2_send.toString());
+                System.out.println("Message dequeued: "+msg_2_send.toString());
                 try {
                     out.writeObject(msg_2_send);
                 } catch (IOException e) {

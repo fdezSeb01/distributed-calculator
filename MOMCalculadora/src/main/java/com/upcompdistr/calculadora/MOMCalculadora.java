@@ -27,6 +27,11 @@ public class MOMCalculadora {
     public static int port;
 
     public static QueueHandlerThread queueHandlerThread;
+    static {
+            queueHandlerThread = new QueueHandlerThread();
+            queueHandlerThread.setDaemon(true);
+            queueHandlerThread.start();
+    }
 
     public static void main(String[] args){
         ServerSocket serverSocket = null; // Initialize serverSocket outside the try-catch block.
@@ -46,9 +51,7 @@ public class MOMCalculadora {
             create_4_servers();
 
             //queue thread
-            queueHandlerThread = new QueueHandlerThread();
-            queueHandlerThread.setDaemon(true);
-            queueHandlerThread.start();
+
             while (true) {
                 Socket socket = serverSocket.accept();
 

@@ -36,11 +36,15 @@ public class QueueHandlerThread extends Thread{
         public void setObject(Object object) {
             this.object = object;
         }
+        @Override
+        public String toString() {
+            return "QueuedMessage [object=" + object.toString() + "]";
+        }
     }
 
     public void addToQueue(Object obj, ObjectOutputStream out) {
         incomingMsgsQueue.add(new QueuedMessage(out, obj));
-        System.out.println("Message queued"+obj.toString());
+        System.out.println("Message queued: "+obj.toString());
         if (obj instanceof MsgStruct) {
             try {
                 out.writeObject(new OperationResult()); //mandar acuse de recibido
@@ -54,7 +58,7 @@ public class QueueHandlerThread extends Thread{
     public void handleQueueMessages() {
         while (!incomingMsgsQueue.isEmpty()) {
             QueuedMessage message = incomingMsgsQueue.poll();
-            System.out.println("Message dequeued"+message.toString());
+            System.out.println("Message dequeued: "+message.toString());
             Object obj = message.getObject();
             if (obj instanceof MsgStruct) {
                 // Handle MsgStruct message

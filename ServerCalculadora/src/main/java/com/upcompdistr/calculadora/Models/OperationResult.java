@@ -25,6 +25,11 @@ public class OperationResult implements Serializable {
         this.log = "Serveridor no capaz de hacer esta operación";
         this.res = 0;
     }
+    public OperationResult() { //sin parametros para acuse de recibido
+        this.solved = false;
+        this.log = "Acuse de recibido";
+        this.res = 0;
+    }
     @Override
     public String toString() {
         return "OperationResult [log=" + log + ", res=" + res + "]";

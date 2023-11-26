@@ -4,6 +4,7 @@ module-info.class
 com/upcompdistr/calculadora/PrimaryController.class
 com/upcompdistr/calculadora/Models/Message.class
 com/upcompdistr/calculadora/ConnectionThread.class
+com/upcompdistr/calculadora/QueueHandlerThread.class
 com/upcompdistr/calculadora/Models/OperationResult.class
 com/upcompdistr/calculadora/Main.class
 com/upcompdistr/calculadora/App.class

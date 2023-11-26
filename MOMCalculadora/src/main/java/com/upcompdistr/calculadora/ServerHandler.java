@@ -56,7 +56,8 @@ public class ServerHandler extends Thread {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Problem handling client " + id);
+            System.out.println("Problem handling server " + id);
+            e.printStackTrace();
         } finally {
             try {
                 if (!socket.isClosed() && socket != null) {

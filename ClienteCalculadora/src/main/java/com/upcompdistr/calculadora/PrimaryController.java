@@ -21,12 +21,15 @@ public class PrimaryController {
 
     public static QueueHandlerThread queueHandlerThread;
 
-    @FXML
-    private void initialize(){
-        instance=this;
+    static{
         queueHandlerThread = new QueueHandlerThread();
         queueHandlerThread.setDaemon(true);
         queueHandlerThread.start();
+    }
+
+    @FXML
+    private void initialize(){
+        instance=this;
     }
 
     static {op =NONE;}
