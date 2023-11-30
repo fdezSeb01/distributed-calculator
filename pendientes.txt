@@ -4,8 +4,3 @@
 --4. minimo de acuses de recibido configurable (1)
 --6. thread que despache los mensajes de la cola de recibidos
 7. Probar que funcione
-----------Opcional--------------------
-8. cambiar protocolo de mensajes a por bytes
-    i. short type 1-4 operaciones, 5 resultado, 99 acuse recibido
-    ii. short size of info in bytes
-    iii. info bytes
